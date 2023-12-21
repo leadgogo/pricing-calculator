@@ -1,0 +1,40 @@
+@font-face {
+    font-family: "SailecRegular";
+    src: url("./sailec-webfont.eot");
+    src: url("./sailec-webfont.eot?#iefix") format("embedded-opentype"),
+      url("./sailec-webfont.woff2") format("woff2"), url("./sailec-webfont.woff") format("woff"),
+      url("./sailec-webfont.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: "SailecMedium";
+    src: url("./sailec-medium-webfont.eot");
+    src: url("./sailec-medium-webfont.eot?#iefix") format("embedded-opentype"),
+      url("./sailec-medium-webfont.woff2") format("woff2"), url("./sailec-medium-webfont.woff") format("woff"),
+      url("./sailec-medium-webfont.ttf") format("truetype");
+    font-weight: 500;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: "SailecLight";
+    src: url("./sailec-light-webfont.eot");
+    src: url("./sailec-light-webfont.eot?#iefix") format("embedded-opentype"),
+      url("./sailec-light-webfont.woff2") format("woff2"), url("./sailec-light-webfont.woff") format("woff"),
+      url("./sailec-light-webfont.ttf") format("truetype");
+    font-weight: 300;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: "SailecBold";
+    src: url("./sailec-bold-webfont.eot");
+    src: url("./sailec-bold-webfont.eot?#iefix") format("embedded-opentype"),
+      url("./sailec-bold-webfont.woff2") format("woff2"), url("./sailec-bold-webfont.woff") format("woff"),
+      url("./sailec-bold-webfont.ttf") format("truetype");
+    font-weight: bold;
+    font-style: normal;
+  }
+  

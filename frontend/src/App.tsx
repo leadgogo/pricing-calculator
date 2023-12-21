@@ -1,4 +1,5 @@
 import React from 'react';
+import 'src/assets/fonts/fonts.css';
 import { createGlobalStyle } from 'styled-components';
 import { antdOverwriteGlobalStyle } from 'src/theme/globals/antd-overwrite-global-syle';
 import { LggThemeProvider } from 'src/components/providers/lgg-theme-provider';
