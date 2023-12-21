@@ -3,6 +3,7 @@ import 'src/assets/fonts/fonts.css';
 import { createGlobalStyle } from 'styled-components';
 import { antdOverwriteGlobalStyle } from 'src/theme/globals/antd-overwrite-global-syle';
 import { LggThemeProvider } from 'src/components/providers/lgg-theme-provider';
+import { CalculatorContent } from 'src/components/calculator-content';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -43,6 +44,8 @@ const App = () => {
     <LggThemeProvider>
       <>
         <GlobalStyle />
+
+        <CalculatorContent />
       </>
     </LggThemeProvider>
   );
