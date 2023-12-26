@@ -46,7 +46,7 @@ export const SectionContainer = ({ icon, title, withFlags, children }: SectionCo
         {Boolean(icon) && icon}
         <Text variant="h4">{title}</Text>
         {withFlags && (
-          <FlagContainer align="middle">
+          <FlagContainer align="middle" wrap={false}>
             <PuertoRicoIcon />
             <USAIcon />
             <CanadaIcon />

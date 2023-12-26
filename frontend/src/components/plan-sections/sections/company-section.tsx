@@ -1,44 +1,16 @@
-import React from 'react';
-import { Row, Input } from 'antd';
+import React, { useState, useCallback } from 'react';
+import { Row } from 'antd';
 import styled from 'styled-components';
 
 import CompanyIcon from 'src/assets/company-icon';
 
-import AddIcon from 'src/assets/add-icon';
-import SubstractIcon from 'src/assets/substract-icon';
-
+import { Footer } from 'src/components/general/footer';
 import SectionContainer from 'src/components/general/section-container';
 import { Text } from 'src/components/general/text';
+import { NumberInput } from 'src/components/general/input';
 
 const CompaniesSection = styled(Row)`
   margin-top: 20px;
-`;
-
-const StyledText = styled(Text)`
-  line-height: 1.43;
-  font-family: ${({ theme }) => theme.font.regular};
-  color: ${({ theme }) => theme.colors.smalt};
-`;
-
-const BlueText = styled(StyledText)`
-  color: ${({ theme }) => theme.colors.globalBlue};
-`;
-
-const StyledInput = styled(Input)`
-  margin-left: 20px;
-  min-width: 125px;
-  width: 125px;
-  height: 38px;
-  input {
-    text-align: center;
-    font-size: 16px !important;
-    color: ${({ theme }) => theme.colors.smalt};
-    font-family: ${({ theme }) => theme.font.medium};
-  }
-`;
-
-const Footer = styled(Row)`
-  margin-top: 12px;
 `;
 
 const companyOptions = [
@@ -57,19 +29,28 @@ const companyOptions = [
 ];
 
 export const CompanySection: React.FC = () => {
+  const [inputsValue, setSliderValue] = useState({ hoursPerDay: 1, days: 1, locations: 1 });
+  console.log('inputsValue', inputsValue);
+
+  const onChangeInput = useCallback(({ id, value }) => {
+    setSliderValue({ ...inputsValue, [id]: Number(value) });
+    console.log(value, id);
+  }, []);
+
   return (
     <SectionContainer title="Companies" icon={<CompanyIcon />}>
       {companyOptions.map(section => (
         <CompaniesSection key={section.name} wrap={false} align="middle" justify="space-between">
-          <StyledText>{section.text}</StyledText>
-          <StyledInput maxLength={4} defaultValue="1" prefix={<SubstractIcon />} suffix={<AddIcon />} />
+          <Text variant="body2">{section.text}</Text>
+          <NumberInput
+            withControls
+            name={section.name}
+            value={String(inputsValue[section.name])}
+            onChange={onChangeInput}
+          />
         </CompaniesSection>
       ))}
-      <Footer align="middle">
-        <Text variant="footer">Cost per excess units: </Text>
-
-        <BlueText variant="footer"> $xx per additional company.</BlueText>
-      </Footer>
+      <Footer entity={'company'} />
     </SectionContainer>
   );
 };

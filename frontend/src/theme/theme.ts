@@ -8,7 +8,7 @@ import { inputsTheme } from 'src/theme/sub-themes/inputs-theme';
 
 export const lggTheme: DefaultTheme = {
   breakpoints: {
-    xs: '0px',
+    xs: '459px',
     sm: '576px',
     md: '768px',
     lg: '992px',

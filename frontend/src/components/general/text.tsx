@@ -13,6 +13,7 @@ type Variants = {
 const getVariants = (props: TextProps): Variants => ({
   bold: {
     fontWeight: 'bold',
+    fontFamily: props.theme.font.bold,
   },
   h1: {
     fontSize: '48px',
@@ -56,6 +57,13 @@ const getVariants = (props: TextProps): Variants => ({
     fontFamily: props.theme.font.regular,
   },
 
+  body2: {
+    fontSize: '14px',
+    lineHeight: '1.43',
+    color: props.theme.colors.smalt,
+    fontFamily: props.theme.font.regular,
+  },
+
   caption: {
     fontSize: '14px',
     lineHeight: '1.86',
@@ -66,7 +74,7 @@ const getVariants = (props: TextProps): Variants => ({
   },
   footer: {
     fontSize: '12px',
-    lineHeight: '26px',
+    lineHeight: '18px',
     letterSpacing: '-0.24px',
     textAlign: 'left',
     fontWeight: 500,
@@ -78,12 +86,13 @@ const getVariants = (props: TextProps): Variants => ({
 const textVariants = (props: TextProps): CSSObject => {
   const variant = (props.variant && getVariants(props)[props.variant]) || {};
   return {
-    color: props.color || props.theme.colors.steel || 'inherit',
+    color: props.theme.colors.steel,
     fontSize: 14,
     lineHeight: '1.86',
     letterSpacing: '-0.28px',
     fontFamily: props.theme.font.medium,
     ...variant,
+    ...(props.color ? { color: props.theme.colors[props.color] } : {}),
   };
 };
 
