@@ -1,6 +1,5 @@
 import React, { ComponentProps, memo } from 'react';
 import styled, { css } from 'styled-components';
-import { Icon } from 'src/components/general/icon';
 import {
   tertiaryHoverStyle,
   tertiaryStyle,
@@ -366,34 +365,6 @@ const tertiaryButtonStyle = css`
   }
 `;
 
-export const BaseButtonIcon = styled(Icon)<{
-  $showNotification?: boolean;
-}>`
-  position: relative;
-
-  &:not(:only-child) {
-    margin-right: 10px;
-  }
-
-  ${({ $showNotification }) =>
-    $showNotification &&
-    css`
-      &::before {
-        content: '';
-        display: block;
-        width: 12px;
-        height: 12px;
-        background: ${({ theme }) => theme.colors.monk};
-        position: absolute;
-        top: -10px;
-        right: -12px;
-        border-radius: 50%;
-        margin: 5px;
-        border: 2px solid ${({ theme }) => theme.colors.white};
-      }
-    `}
-`;
-
 const baseButtonStyles = css`
   align-items: center;
   border-radius: 4px;
@@ -413,20 +384,6 @@ export const StyledBaseButton = styled.button<{
   ${isomorphicColorButtonStyles};
 `;
 
-type BaseButtonButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant: ButtonVariant;
-  icon?: ComponentProps<typeof Icon>['type'] | React.ReactNode;
-};
-
-export const BaseButton = memo<React.PropsWithChildren<BaseButtonButtonProps>>(({ icon, children, ...rest }) => {
-  return (
-    <StyledBaseButton {...rest}>
-      {icon ? typeof icon === 'string' ? <BaseButtonIcon data-element="leading-icon" type={icon} /> : icon : null}
-      <span data-element="label">{children}</span>
-    </StyledBaseButton>
-  );
-});
-
 const buttonBaseStyles = css<{ size: ButtonSize }>`
   ${baseButtonStyles};
   ${({ size }) => {
@@ -436,20 +393,12 @@ const buttonBaseStyles = css<{ size: ButtonSize }>`
           font-size: 14px;
           height: 38px;
           line-height: 17px;
-          ${BaseButtonIcon} svg {
-            height: 18px;
-            width: 18px;
-          }
         `;
       case 'small':
         return `
           font-size: 12px;
           height: 34px;
           line-height: 16px;
-          ${BaseButtonIcon} svg {
-            height: 16px;
-            width: 16px;
-          }
         `;
     }
   }};

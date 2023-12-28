@@ -167,7 +167,7 @@ export const EstimateTotals: React.FC = () => {
       </TitleContainer>
       {billingSections.map(section => {
         return (
-          <TotalsSection key="section.title">
+          <TotalsSection key={section.title}>
             <StyledRow align="middle" justify="space-between">
               <SectionHeading variant="h2">{section.title}</SectionHeading>
               {section.total && <TotalText>{section.total}</TotalText>}

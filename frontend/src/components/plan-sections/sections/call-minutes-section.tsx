@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import RingerIcon from 'src/assets/ringer-icon';
 import InfoIcon from 'src/assets/info-icon';
 
+import { usePhoneCallsData } from 'src/features/phone-calls/hooks/usePhoneCallsData';
+
 import SectionContainer from 'src/components/general/section-container';
 import { Text } from 'src/components/general/text';
 import { Footer } from 'src/components/general/footer';
@@ -105,23 +107,30 @@ const DropdownText = styled(Text)`
 const callOptions = [
   {
     text: 'On average, how many calls does your company handle per hour? Please estimate as necessary.',
-    name: 'callsAmount',
+    name: 'callsPerHourAmount',
   },
   {
     text: 'What is the average duration of these calls, in minutes?',
-    name: 'callDuration',
+    name: 'callDurationInMinutes',
   },
 ];
 
-export const CallMinutesSection: React.FC = () => {
+export const CallMinutesSection = () => {
   const { sm: smallBreakpoint } = useBreakpoint();
+  const { phoneCallsState, totalMinutesNeeded, onSectionValueChange } = usePhoneCallsData();
+
   return (
     <SectionContainer withFlags title="Voice call minutes (PR/US/CA)" icon={<RingerIcon />}>
       <StyledHeading>Across the entire company, including all locations:</StyledHeading>
       {callOptions.map(section => (
         <ContentSection key={section.name} wrap={false} align="middle" justify="space-between">
           <Text variant="body2">{section.text}</Text>
-          <NumberInput withControls name={section.name} />
+          <NumberInput
+            withControls
+            name={section.name}
+            value={phoneCallsState[section.name]}
+            onChange={(value: string) => onSectionValueChange({ value, field: section.name })}
+          />
         </ContentSection>
       ))}
       <TotalSection wrap={false} align="middle" justify="space-between">
@@ -130,7 +139,7 @@ export const CallMinutesSection: React.FC = () => {
           <Popover content={<PopoverContent />} placement={!smallBreakpoint ? 'top' : 'topLeft'}>
             <InfoIcon />
           </Popover>
-          <StyledNumberInput withControls name="total" />
+          <StyledNumberInput name="total" value={String(totalMinutesNeeded)} disabled />
         </Row>
       </TotalSection>
       <Footer entity={'minute'}>

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Input } from 'antd';
+import React, { useCallback } from 'react';
+import { Input, Button } from 'antd';
 import styled from 'styled-components';
 
 import AddIcon from 'src/assets/add-icon';
@@ -22,12 +22,20 @@ const StyledInput = styled(Input)`
     font-family: ${({ theme }) => theme.font.medium};
   }
 
-  & .ant-input-prefix {
-    cursor: pointer;
+  & .ant-input-affix-wrapper:focus {
+    border-color: transparent !important;
   }
+`;
 
-  & .ant-input-suffix {
-    cursor: pointer;
+const StyledButton = styled(Button)`
+  border-color: transparent !important;
+  padding: 7px;
+  outline: none !important;
+  width: 16px !important;
+  min-width: 16px !important;
+
+  & div {
+    display: none;
   }
 `;
 
@@ -37,7 +45,8 @@ type NumberInputType = {
   defaultValue?: string;
   withControls?: boolean;
   value: string;
-  onChange: ({ value, id }: { value: string; id: string }) => void;
+  onChange?: (value: string) => void;
+  disabled?: boolean;
 };
 
 export const NumberInput = ({
@@ -47,9 +56,13 @@ export const NumberInput = ({
   withControls,
   value,
   onChange,
+  disabled,
   ...rest
 }: NumberInputType) => {
-  const [sliderValue, setSliderValue] = useState(1000);
+  const onInputChange = useCallback(e => {
+    onChange?.(e.target.value);
+  }, []);
+
   return (
     <StyledInput
       id={name}
@@ -57,25 +70,33 @@ export const NumberInput = ({
       defaultValue={defaultValue || '1'}
       prefix={
         withControls && (
-          <SubstractIcon
+          <StyledButton
+            type="primary"
+            shape="circle"
+            ghost
+            icon={<SubstractIcon />}
             onClick={() => {
-              console.log('hereee');
-              onChange({ value: String(Number(value) - 1), id: name || '' });
+              onChange?.(String(Number(value) - 1));
             }}
           />
         )
       }
       suffix={
         withControls && (
-          <AddIcon
+          <StyledButton
+            type="primary"
+            shape="circle"
+            ghost
+            icon={<AddIcon />}
             onClick={() => {
-              onChange({ value: String(Number(value) + 1), id: name || '' });
+              onChange?.(String(Number(value) + 1));
             }}
           />
         )
       }
       value={value || ''}
-      onChange={({ target: { value, id } }) => onChange({ value, id })}
+      onChange={onInputChange}
+      disabled={disabled}
       {...rest}
     />
   );

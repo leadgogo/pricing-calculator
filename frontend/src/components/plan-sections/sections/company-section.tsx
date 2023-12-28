@@ -1,8 +1,10 @@
-import React, { useState, useCallback } from 'react';
+import React from 'react';
 import { Row } from 'antd';
 import styled from 'styled-components';
 
 import CompanyIcon from 'src/assets/company-icon';
+
+import { useCompaniesData } from 'src/features/companies/hooks/useCompaniesData';
 
 import { Footer } from 'src/components/general/footer';
 import SectionContainer from 'src/components/general/section-container';
@@ -16,26 +18,20 @@ const CompaniesSection = styled(Row)`
 const companyOptions = [
   {
     text: 'How many locations does the company operate where Leadgogo would be used?',
-    name: 'locations',
+    name: 'totalLocations',
   },
   {
     text: 'How many days per week is the business open?',
-    name: 'days',
+    name: 'workingDaysPerWeek',
   },
   {
     text: 'How many hours per day does the business remain open?',
-    name: 'hoursPerDay',
+    name: 'hoursOpenPerDay',
   },
 ];
 
-export const CompanySection: React.FC = () => {
-  const [inputsValue, setSliderValue] = useState({ hoursPerDay: 1, days: 1, locations: 1 });
-  console.log('inputsValue', inputsValue);
-
-  const onChangeInput = useCallback(({ id, value }) => {
-    setSliderValue({ ...inputsValue, [id]: Number(value) });
-    console.log(value, id);
-  }, []);
+export const CompanySection = () => {
+  const { companiesState, onSectionValueChange } = useCompaniesData();
 
   return (
     <SectionContainer title="Companies" icon={<CompanyIcon />}>
@@ -45,8 +41,8 @@ export const CompanySection: React.FC = () => {
           <NumberInput
             withControls
             name={section.name}
-            value={String(inputsValue[section.name])}
-            onChange={onChangeInput}
+            value={String(companiesState[section.name])}
+            onChange={(value: string) => onSectionValueChange({ value, field: section.name })}
           />
         </CompaniesSection>
       ))}

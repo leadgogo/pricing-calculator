@@ -1,6 +1,8 @@
-import React, { useCallback, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Radio } from 'antd';
+
+import { useEstimate } from 'src/features/estimate/hooks/useEstimate';
 
 import { CompanySection } from 'src/components/plan-sections/sections/company-section';
 import { ContactsSection } from 'src/components/plan-sections/sections/contacts-section';
@@ -48,11 +50,7 @@ const StyledSlider = styled(Group)`
     background: ${({ theme }) => theme.colors.white} !important;
   }
 
-  & .ant-radio-button-wrapper:hover::before {
-    background: ${({ theme }) => theme.colors.white} !important;
-  }
-
-  & .ant-radio-button-wrapper-checked::before {
+  & .ant-radio-button-wrapper::before {
     background: ${({ theme }) => theme.colors.white} !important;
   }
 `;
@@ -60,7 +58,7 @@ const StyledSlider = styled(Group)`
 const StyledOption = styled(Button)`
   background: ${({ theme }) => theme.colors.white} !important;
   border-color: ${({ theme }) => theme.colors.white} !important;
-  width: 50%;
+  width: 33.33%;
   height: 50px !important;
   white-space: nowrap;
 `;
@@ -78,24 +76,25 @@ const StyledText = styled(Text)<{ selected: boolean }>`
 `;
 
 export const PlanSections: React.FC = () => {
-  const [pricingPlan, setPricingPlan] = useState('ESSENTIAL');
-
-  const onChange = useCallback(e => {
-    setPricingPlan(e.target.value);
-  }, []);
+  const { doSetSelectedPlan, selectedPlan, PlanTypes } = useEstimate();
 
   return (
     <PlanContainer>
       <Text variant="h2">Customize your plan:</Text>
-      <StyledSlider value={pricingPlan} buttonStyle="solid" size="large" onChange={onChange}>
-        <StyledOption value="ESSENTIAL">
-          <StyledText selected={pricingPlan === 'ESSENTIAL'} variant="caption">
+      <StyledSlider value={selectedPlan} buttonStyle="solid" size="large" onChange={doSetSelectedPlan}>
+        <StyledOption value={PlanTypes.Essential}>
+          <StyledText selected={selectedPlan === PlanTypes.Essential} variant="caption">
             Essential plan
           </StyledText>
         </StyledOption>
-        <RightStyledOption value="PROFESSIONAL">
-          <StyledText selected={pricingPlan === 'PROFESSIONAL'} variant="caption">
+        <RightStyledOption value={PlanTypes.Professional}>
+          <StyledText selected={selectedPlan === PlanTypes.Professional} variant="caption">
             Professional Plan
+          </StyledText>
+        </RightStyledOption>
+        <RightStyledOption value={PlanTypes.Premium}>
+          <StyledText selected={selectedPlan === PlanTypes.Premium} variant="caption">
+            Premium Plan
           </StyledText>
         </RightStyledOption>
       </StyledSlider>

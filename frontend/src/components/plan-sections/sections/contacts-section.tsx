@@ -1,5 +1,6 @@
-import React, { useState, useCallback } from 'react';
-import { Row } from 'antd';
+import React from 'react';
+import { Row, Slider } from 'antd';
+import type { SliderMarks } from 'antd/es/slider';
 import styled from 'styled-components';
 
 import AvatarIcon from 'src/assets/user-avatar-icon';
@@ -8,8 +9,7 @@ import { Text } from 'src/components/general/text';
 import { NumberInput } from 'src/components/general/input';
 import { Footer } from 'src/components/general/footer';
 
-import { Slider } from 'antd';
-import type { SliderMarks } from 'antd/es/slider';
+import { useContacts } from 'src/features/contacts/hooks/useContacts';
 
 const marks: SliderMarks = {
   0: '',
@@ -78,18 +78,8 @@ const ContactsContent = styled(Row)`
   margin-top: 20px;
 `;
 
-export const ContactsSection: React.FC = () => {
-  const [sliderValue, setSliderValue] = useState(1000);
-
-  const onChangeInput = useCallback(({ value }) => {
-    setSliderValue(value);
-    console.log(value);
-  }, []);
-
-  const onChangeSlider = useCallback(value => {
-    setSliderValue(value);
-    console.log(value);
-  }, []);
+export const ContactsSection = () => {
+  const { totalContacts, doSetTotalContacts } = useContacts();
 
   return (
     <SectionContainer title="Contacts" icon={<AvatarIcon />}>
@@ -98,14 +88,13 @@ export const ContactsSection: React.FC = () => {
           On average, how many contacts (unique individuals) communicate with your business on a daily basis? Please
           estimate as necessary.
         </Text>
-        <NumberInput maxLength={5} value={String(sliderValue)} onChange={onChangeInput} />
+        <NumberInput maxLength={5} value={String(totalContacts)} onChange={doSetTotalContacts} />
       </ContactsContent>
 
       <StyledSlider
         marks={marks}
-        value={sliderValue}
-        onChange={onChangeSlider}
-        onChangeComplete={e => console.log(e)}
+        value={totalContacts}
+        onChange={doSetTotalContacts}
         min={0}
         max={15000}
         tooltip={{ open: false }}

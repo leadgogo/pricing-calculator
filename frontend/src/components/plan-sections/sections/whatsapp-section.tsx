@@ -1,15 +1,27 @@
 import React from 'react';
 import { Row, Switch } from 'antd';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 import WhatsAppIcon from 'src/assets/whatsapp-icon';
+
+import { useWhatsappData } from 'src/features/whatsapp/hooks/useWhatsappData';
 
 import { SectionWrapper } from 'src/components/general/section-container';
 import { Text } from 'src/components/general/text';
 import { NumberInput } from 'src/components/general/input';
 
-const WhatsAppContainer = styled(SectionWrapper)`
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
+const WhatsAppContainer = styled(({ isWhatsappActivated, ...rest }) => <SectionWrapper {...rest} />)`
   padding: 26px 20px 20px 20px;
+  transition: all 0.5s ease-out;
+  max-height: ${({ isWhatsappActivated }) => (isWhatsappActivated ? 500 : 165)}px;
 `;
 
 const StyledTitle = styled(Text)`
@@ -38,6 +50,10 @@ const StyledSwitch = styled(Switch)`
   }
 `;
 
+const CollapsibleContainer = styled.div`
+  animation: ${fadeIn} 0.6s ease-in-out;
+`;
+
 const BottomContainer = styled.div`
   border-top: ${({ theme }) => `1px solid ${theme.colors.koala}`};
   margin-top: 15px;
@@ -55,9 +71,12 @@ const BlueText = styled(Text)`
   color: ${({ theme }) => theme.colors.globalBlue};
 `;
 
-export const WhatsAppSections: React.FC = () => {
+export const WhatsAppSections = () => {
+  const { isWhatsappActivated, totalPhoneNumbers, doSetIsWhatsappActivated, doSetTotalPhonenumbers } =
+    useWhatsappData();
+
   return (
-    <WhatsAppContainer>
+    <WhatsAppContainer isWhatsappActivated={isWhatsappActivated}>
       <Row align="middle">
         <WhatsAppIcon />
         <StyledTitle variant="h4">WhatsApp Channel</StyledTitle>
@@ -66,21 +85,31 @@ export const WhatsAppSections: React.FC = () => {
         <StyledText variant="body2">
           Estimate the cost of using WhatsApp Business as a communication channel in the company.
         </StyledText>
-        <StyledSwitch />
+        <StyledSwitch value={isWhatsappActivated} onChange={doSetIsWhatsappActivated} />
       </StyledRow>
-      <BottomContainer>
-        <StyledHeading>Across the entire company, including all locations:</StyledHeading>
-        <Row wrap={false} align="middle" justify="space-between">
-          <Text variant="body2">How many phone numbers are expected to be enabled with WhatsApp Business?</Text>
-          <NumberInput withControls name="whatsappTotalNumbers" />
-        </Row>
-      </BottomContainer>
-      <Text variant="footer">
-        <BlueText variant="footer">Cost of $xx per WhatsApp number</BlueText> integrated into the Leadgogo platform,
-        with volume pricing reflected in the price estimate as applicable. Other charges apply. WhatsApp Business
-        messages are regulated and subject to fees by Meta. Please refer to the most recent Meta pricing by{' '}
-        <BlueText variant="footer">clicking here</BlueText>.
-      </Text>
+      {isWhatsappActivated && (
+        <CollapsibleContainer>
+          <BottomContainer>
+            <StyledHeading>Across the entire company, including all locations:</StyledHeading>
+            <Row wrap={false} align="middle" justify="space-between">
+              <Text variant="body2">How many phone numbers are expected to be enabled with WhatsApp Business?</Text>
+              <NumberInput
+                withControls
+                name="whatsappTotalNumbers"
+                onChange={doSetTotalPhonenumbers}
+                value={String(totalPhoneNumbers)}
+                defaultValue="1"
+              />
+            </Row>
+          </BottomContainer>
+          <Text variant="footer">
+            <BlueText variant="footer">Cost of $xx per WhatsApp number</BlueText> integrated into the Leadgogo platform,
+            with volume pricing reflected in the price estimate as applicable. Other charges apply. WhatsApp Business
+            messages are regulated and subject to fees by Meta. Please refer to the most recent Meta pricing by{' '}
+            <BlueText variant="footer">clicking here</BlueText>.
+          </Text>
+        </CollapsibleContainer>
+      )}
     </WhatsAppContainer>
   );
 };

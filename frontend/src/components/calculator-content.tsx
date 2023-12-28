@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Layout, Col, Row } from 'antd';
 import styled from 'styled-components';
 
 import { PlanSections } from 'src/components/plan-sections';
 import { EstimateTotals } from 'src/components/estimate-totals';
 import { Text } from 'src/components/general/text';
+import { useEstimate } from 'src/features/estimate/hooks/useEstimate';
 
 const { Header, Footer } = Layout;
 
@@ -74,6 +75,18 @@ const StyledHalf = styled(Col)`
 `;
 
 export const CalculatorContent: React.FC = () => {
+  const { doLoadEstimateFromURL } = useEstimate();
+
+  useEffect(() => {
+    const search = window.location.search;
+    const params = new URLSearchParams(search);
+    const data = params.get('data');
+
+    if (data) {
+      doLoadEstimateFromURL(data);
+    }
+  }, []);
+
   return (
     <Layout>
       <StyledHeader>

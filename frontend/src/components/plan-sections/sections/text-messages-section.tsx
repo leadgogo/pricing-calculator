@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import SMSIcon from 'src/assets/sms-icon';
 import InfoIcon from 'src/assets/info-icon';
 
+import { useTextMessagesData } from 'src/features/text-messages/hooks/useTextMessagesData';
+
 import SectionContainer from 'src/components/general/section-container';
 import { Text } from 'src/components/general/text';
 import { Footer } from 'src/components/general/footer';
@@ -67,15 +69,23 @@ const smsOptions = [
   },
 ];
 
-export const TextMessagesSection: React.FC = () => {
+export const TextMessagesSection = () => {
   const { sm: smallBreakpoint } = useBreakpoint();
+
+  const { textMessagesState, totalTextMessages, onSectionValueChange } = useTextMessagesData();
+
   return (
     <SectionContainer withFlags title="Text messages (PR/US/CA)" icon={<SMSIcon />}>
       <StyledHeading>Across the entire company, including all locations:</StyledHeading>
       {smsOptions.map(section => (
         <ContentSection key={section.name} wrap={false} align="middle" justify="space-between">
           <Text variant="body2">{section.text}</Text>
-          <NumberInput withControls name={section.name} />
+          <NumberInput
+            withControls
+            name={section.name}
+            value={textMessagesState[section.name]}
+            onChange={(value: string) => onSectionValueChange({ value, field: section.name })}
+          />
         </ContentSection>
       ))}
       <TotalSection wrap={false} align="middle" justify="space-between">
@@ -84,14 +94,15 @@ export const TextMessagesSection: React.FC = () => {
           <Popover content={<PopoverContent />} placement={!smallBreakpoint ? 'top' : 'topLeft'}>
             <InfoIcon />
           </Popover>
-          <StyledNumberInput withControls name="total" />
+          <StyledNumberInput name="total" value={String(totalTextMessages)} disabled />
         </Row>
       </TotalSection>
       <Footer entity={'SMS / text message'}>
         <Text variant="footer">
           {' '}
-          Other fees apply. Business SMS are regulated and subject to <BlueText>additional fees</BlueText> and rules
-          based on detailed registrations managed by The Campaign Registry.
+          Other fees apply. Business SMS are regulated and subject to{' '}
+          <BlueText variant="footer">additional fees</BlueText> and rules based on detailed registrations managed by The
+          Campaign Registry.
         </Text>
       </Footer>
     </SectionContainer>

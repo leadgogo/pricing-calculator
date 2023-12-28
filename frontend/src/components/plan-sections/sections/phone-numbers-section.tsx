@@ -4,6 +4,8 @@ import styled from 'styled-components';
 
 import PhoneNumberIcon from 'src/assets/phone-number-icon';
 
+import { usePhoneNumbersData } from 'src/features/phone-numbers/hooks/usePhoneNumbersData';
+
 import { Footer } from 'src/components/general/footer';
 import SectionContainer from 'src/components/general/section-container';
 import { Text } from 'src/components/general/text';
@@ -33,26 +35,20 @@ const StyledHeading = styled(StyledText)`
 const phoneNumberOptions = [
   {
     text: 'How many people in your company need a unique phone number??',
-    name: 'agentPhoneNumber',
+    name: 'agentPhoneNumbersAmount',
   },
   {
     text: 'How many additional phone numbers are needed (e.g. for separate departments, stores)??',
-    name: 'extraPhoneNumbers',
+    name: 'extraPhoneNumbersAmount',
   },
   {
     text: 'If measuring the effectiveness of advertising campaigns, how many of these campaigns will include a phone number?',
-    name: 'campaigns',
+    name: 'campaignPhoneNumbersAmount',
   },
 ];
 
-export const PhoneNumberSection: React.FC = () => {
-  const [inputsValue, setSliderValue] = useState({ agentPhoneNumber: 1, extraPhoneNumbers: 1, campaigns: 1 });
-  console.log('inputsValue', inputsValue);
-
-  const onChangeInput = useCallback(({ id, value }) => {
-    setSliderValue({ ...inputsValue, [id]: Number(value) });
-    console.log(value, id);
-  }, []);
+export const PhoneNumberSection = () => {
+  const { phoneNumbersState, totalPhoneNumbers, onSectionValueChange } = usePhoneNumbersData();
 
   return (
     <SectionContainer title="Phone numbers" icon={<PhoneNumberIcon />}>
@@ -63,14 +59,14 @@ export const PhoneNumberSection: React.FC = () => {
           <NumberInput
             withControls
             name={section.name}
-            value={String(inputsValue[section.name])}
-            onChange={onChangeInput}
+            value={String(phoneNumbersState[section.name])}
+            onChange={(value: string) => onSectionValueChange({ value, field: section.name })}
           />
         </DetailsSection>
       ))}
       <TotalSection wrap={false} align="middle" justify="space-between">
         <StyledText>Phone numbers included in plan estimate:</StyledText>
-        <NumberInput withControls name="total" />
+        <NumberInput name="total" value={String(totalPhoneNumbers)} disabled />
       </TotalSection>
       <Footer entity={'phone number'} />
     </SectionContainer>
