@@ -31,7 +31,6 @@
     "./test",
     "./src",
     "./src/**/*.json",
-    "./capacitor.config.ts",
     "./vite.config.ts",
     "./vitest.config.ts"
   ],
