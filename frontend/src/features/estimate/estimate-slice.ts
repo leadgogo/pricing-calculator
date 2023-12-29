@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { EstimateState, RootState } from 'src/store/types';
 import { PlanTypes } from 'src/store/types';
@@ -6,6 +6,17 @@ import { PlanTypes } from 'src/store/types';
 const initialState: EstimateState = {
   selectedPlan: PlanTypes.Essential,
 };
+
+export const generateEstimateLink = createAsyncThunk('estimate/generateLink', async (_, thunkApi) => {
+  const state = thunkApi.getState();
+  // The Redux state is encryted to base64 to be shared in the URL
+  const encryptedState = btoa(JSON.stringify(state));
+  const url = new URL(window.location.origin);
+  url.searchParams.set('data', encryptedState);
+  const newLink = url.toString();
+  window.history.pushState(null, '', newLink);
+  navigator.clipboard.writeText(newLink);
+});
 
 export const estimateSlice = createSlice({
   name: 'estimate',

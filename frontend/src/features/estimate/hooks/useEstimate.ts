@@ -1,12 +1,12 @@
 import { RadioChangeEvent } from 'antd';
 import { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setSelectedPlan, loadEstimateFromURL } from 'src/features/estimate/estimate-slice';
+import { setSelectedPlan, loadEstimateFromURL, generateEstimateLink } from 'src/features/estimate/estimate-slice';
 import type { RootState } from 'src/store/types';
 import { PlanTypes } from 'src/store/types';
 
 export const useEstimate = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
   const { selectedPlan } = useSelector((state: RootState) => state.estimate);
 
   const doSetSelectedPlan = useCallback((e: RadioChangeEvent) => {
@@ -23,10 +23,15 @@ export const useEstimate = () => {
     }
   }, []);
 
+  const generateink = useCallback(() => {
+    dispatch(generateEstimateLink());
+  }, []);
+
   return {
     PlanTypes,
     selectedPlan,
     doSetSelectedPlan,
     doLoadEstimateFromURL,
+    generateink,
   };
 };

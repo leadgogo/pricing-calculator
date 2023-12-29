@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Row } from 'antd';
 import styled from 'styled-components';
 
 import { SectionWrapper } from 'src/components/general/section-container';
 import { Button } from 'src/components/general/button';
 import { Text } from 'src/components/general/text';
+import { useEstimate } from 'src/features/estimate/hooks/useEstimate';
 
 const PriceContainer = styled(SectionWrapper)`
   margin-right: auto;
@@ -160,6 +161,8 @@ const billingSections = [
 ];
 
 export const EstimateTotals: React.FC = () => {
+  const { generateink } = useEstimate();
+
   return (
     <PriceContainer>
       <TitleContainer>
@@ -197,7 +200,9 @@ export const EstimateTotals: React.FC = () => {
           estimated price does not include any third-party fees or applicable taxes. All prices are subject to change
           without notice.
         </DisclaimerText>
-        <StyledButton variant="cta">Copy link to price estimate</StyledButton>
+        <StyledButton variant="cta" onClick={generateink}>
+          Copy link to price estimate
+        </StyledButton>
       </TotalButtonContainer>
     </PriceContainer>
   );

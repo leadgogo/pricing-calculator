@@ -63,6 +63,7 @@ export const callMinutesSlice = createSlice({
       if (callMinutes) {
         state.callsPerHourAmount = callMinutes.callsPerHourAmount;
         state.callDurationInMinutes = callMinutes.callDurationInMinutes;
+        state.selectedCallMinutesPackage = callMinutes.selectedCallMinutesPackage;
       }
     });
   },
