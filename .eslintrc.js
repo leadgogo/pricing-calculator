@@ -8,7 +8,7 @@ module.exports = {
   extends: ['plugin:prettier/recommended', 'plugin:import/recommended'],
   ignorePatterns: ['!.*', '**/node_modules', '**/dist', '**/dist-unused', 'apps/admin-backend'],
   rules: {
-    'eslint.workingDirectories': ['./client', './server'],
+    'eslint.workingDirectories': ['./frontend'],
     'prettier/prettier': 'warn',
     'no-only-tests/no-only-tests': [
       'error',
