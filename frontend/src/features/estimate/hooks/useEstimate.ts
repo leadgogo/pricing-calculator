@@ -1,21 +1,13 @@
 import { RadioChangeEvent } from 'antd';
 import { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  setIsWhatsappActivated,
-  setSelectedPlan,
-  PlanTypes,
-  loadEstimateFromURL,
-} from 'src/features/estimate/estimate-slice';
-import type { RootState } from 'src/store';
+import { setSelectedPlan, loadEstimateFromURL } from 'src/features/estimate/estimate-slice';
+import type { RootState } from 'src/store/types';
+import { PlanTypes } from 'src/store/types';
 
 export const useEstimate = () => {
   const dispatch = useDispatch();
-  const { isWhatsappActivated, selectedPlan } = useSelector((state: RootState) => state.estimate);
-
-  const doSetIsWhatsappActivated = useCallback((value: boolean) => {
-    dispatch(setIsWhatsappActivated(value));
-  }, []);
+  const { selectedPlan } = useSelector((state: RootState) => state.estimate);
 
   const doSetSelectedPlan = useCallback((e: RadioChangeEvent) => {
     dispatch(setSelectedPlan(e.target.value));
@@ -35,8 +27,6 @@ export const useEstimate = () => {
     PlanTypes,
     selectedPlan,
     doSetSelectedPlan,
-    isWhatsappActivated,
-    doSetIsWhatsappActivated,
     doLoadEstimateFromURL,
   };
 };

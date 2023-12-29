@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setFieldValue } from 'src/features/companies/companiesSlice';
-import type { RootState } from 'src/store';
+import type { RootState } from 'src/store/types';
 
 export const useCompaniesData = () => {
   const dispatch = useDispatch();

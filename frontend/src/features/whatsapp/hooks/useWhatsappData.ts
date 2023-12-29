@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setIsWhatsappActivated, setTotalPhonenumbers } from 'src/features/whatsapp/whatsapp-slice';
-import type { RootState } from 'src/store';
+import type { RootState } from 'src/store/types';
 
 export const useWhatsappData = () => {
   const dispatch = useDispatch();

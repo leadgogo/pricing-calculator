@@ -1,23 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import type { RootState } from 'src/store';
-
-export enum PlanTypes {
-  Professional = 'PROFESSIONAL',
-  Essential = 'ESSENTIAL',
-  Premium = 'PREMIUM',
-}
-
-export interface EstimateState {
-  selectedPlan: PlanTypes;
-}
+import type { EstimateState, RootState } from 'src/store/types';
+import { PlanTypes } from 'src/store/types';
 
 const initialState: EstimateState = {
   selectedPlan: PlanTypes.Essential,
 };
 
 export const estimateSlice = createSlice({
-  name: 'counter',
+  name: 'estimate',
   initialState,
   reducers: {
     loadEstimateFromURL: (state, action: PayloadAction<RootState>) => {
@@ -32,4 +23,4 @@ export const estimateSlice = createSlice({
   },
 });
 
-export const { setIsWhatsappActivated, setSelectedPlan, loadEstimateFromURL } = estimateSlice.actions;
+export const { setSelectedPlan, loadEstimateFromURL } = estimateSlice.actions;

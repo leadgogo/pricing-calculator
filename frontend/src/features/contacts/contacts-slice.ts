@@ -1,10 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from 'src/store';
+import type { ContactsState, RootState } from 'src/store/types';
 import { loadEstimateFromURL } from 'src/features/estimate/estimate-slice';
-
-export interface ContactsState {
-  totalContacts: number;
-}
 
 const initialState: ContactsState = {
   totalContacts: 1000,
@@ -33,4 +29,3 @@ export const contactsSlice = createSlice({
 });
 
 export const { setTotalContacts } = contactsSlice.actions;
-

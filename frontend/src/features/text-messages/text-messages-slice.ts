@@ -1,11 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from 'src/store';
+import type { TextMessagesState, RootState } from 'src/store/types';
 import { loadEstimateFromURL } from 'src/features/estimate/estimate-slice';
-
-export interface TextMessagesState {
-  receivedTextsPerHour: number;
-  sentTextsPerHour: number;
-}
 
 const initialState: TextMessagesState = {
   receivedTextsPerHour: 1,

@@ -1,12 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from 'src/store';
+import type { PhoneNumbersState, RootState } from 'src/store/types';
 import { loadEstimateFromURL } from 'src/features/estimate/estimate-slice';
-
-export interface PhoneNumbersState {
-  agentPhoneNumbersAmount: number;
-  extraPhoneNumbersAmount: number;
-  campaignPhoneNumbersAmount: number;
-}
 
 const initialState: PhoneNumbersState = {
   agentPhoneNumbersAmount: 1,

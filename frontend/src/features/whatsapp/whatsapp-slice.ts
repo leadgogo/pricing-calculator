@@ -1,11 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from 'src/store';
+import type { WhatsappState, RootState } from 'src/store/types';
 import { loadEstimateFromURL } from 'src/features/estimate/estimate-slice';
-
-export interface WhatsappState {
-  isWhatsappActivated: boolean;
-  totalPhoneNumbers: number;
-}
 
 const initialState: WhatsappState = {
   isWhatsappActivated: false,

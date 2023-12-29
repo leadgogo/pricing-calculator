@@ -1,13 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from 'src/store';
+import type { PhoneCallState, RootState } from 'src/store/types';
 import { loadEstimateFromURL } from 'src/features/estimate/estimate-slice';
 
-export interface TextMessagesState {
-  callsPerHourAmount: number;
-  callDurationInMinutes: number;
-}
-
-const initialState: TextMessagesState = {
+const initialState: PhoneCallState = {
   callsPerHourAmount: 1,
   callDurationInMinutes: 1,
 };

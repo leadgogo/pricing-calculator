@@ -1,12 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { loadEstimateFromURL } from 'src/features/estimate/estimate-slice';
-import type { RootState } from 'src/store';
-
-export interface CompaniesState {
-  totalLocations: number;
-  workingDaysPerWeek: number;
-  hoursOpenPerDay: number;
-}
+import type { CompaniesState, RootState } from 'src/store/types';
 
 const initialState: CompaniesState = {
   totalLocations: 1,

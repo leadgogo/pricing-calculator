@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setTotalContacts } from 'src/features/contacts/contacts-slice';
-import type { RootState } from 'src/store';
+import type { RootState } from 'src/store/types';
 
 export const useContacts = () => {
   const dispatch = useDispatch();
