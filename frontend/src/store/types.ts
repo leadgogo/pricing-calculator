@@ -21,6 +21,12 @@ export interface EstimateState {
 export interface PhoneCallState {
   callsPerHourAmount: number;
   callDurationInMinutes: number;
+  selectedCallMinutesPackage: string;
+  callMinutePackages: {
+    quantity: string;
+    pricePerUnit: string;
+    amount: string;
+  }[];
 }
 
 export interface PhoneNumbersState {

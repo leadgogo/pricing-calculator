@@ -5,6 +5,39 @@ import { loadEstimateFromURL } from 'src/features/estimate/estimate-slice';
 const initialState: PhoneCallState = {
   callsPerHourAmount: 1,
   callDurationInMinutes: 1,
+  selectedCallMinutesPackage: '',
+  callMinutePackages: [
+    {
+      quantity: '2000',
+      pricePerUnit: '0.045',
+      amount: '89.00',
+    },
+    {
+      quantity: '5000',
+      pricePerUnit: '0.040',
+      amount: '199.00',
+    },
+    {
+      quantity: '10000',
+      pricePerUnit: '0.035',
+      amount: '349.00',
+    },
+    {
+      quantity: '20000',
+      pricePerUnit: '0.030',
+      amount: '599.00',
+    },
+    {
+      quantity: '50000',
+      pricePerUnit: '0.025',
+      amount: '1249.00',
+    },
+    {
+      quantity: '100000',
+      pricePerUnit: '0.020',
+      amount: '1999.00',
+    },
+  ],
 };
 
 export const callMinutesSlice = createSlice({
@@ -18,6 +51,11 @@ export const callMinutesSlice = createSlice({
         state[field] = Number(value);
       }
     },
+    setSelectedCallMinutesPackage: (state, action: PayloadAction<string>) => {
+      const selectedCallMinutesPackage = action.payload;
+
+      state.selectedCallMinutesPackage = selectedCallMinutesPackage;
+    },
   },
   extraReducers: builder => {
     builder.addCase(loadEstimateFromURL, (state, action: PayloadAction<RootState>) => {
@@ -30,4 +68,4 @@ export const callMinutesSlice = createSlice({
   },
 });
 
-export const { setFieldValue } = callMinutesSlice.actions;
+export const { setFieldValue, setSelectedCallMinutesPackage } = callMinutesSlice.actions;

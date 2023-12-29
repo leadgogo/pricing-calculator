@@ -11,6 +11,7 @@ import SectionContainer from 'src/components/general/section-container';
 import { Text } from 'src/components/general/text';
 import { Footer } from 'src/components/general/footer';
 import { NumberInput } from 'src/components/general/input';
+import { currencyFormatter } from 'src/components/utils/currencyFormatter';
 
 const { useBreakpoint } = Grid;
 
@@ -89,6 +90,7 @@ const MonthlyMinutesText = styled(Text)`
 `;
 
 const StyledSelect = styled(Select)`
+  min-width: 232px;
   width: 232px;
   height: 42px;
   margin-left: 12px;
@@ -117,7 +119,14 @@ const callOptions = [
 
 export const CallMinutesSection = () => {
   const { sm: smallBreakpoint } = useBreakpoint();
-  const { phoneCallsState, totalMinutesNeeded, onSectionValueChange } = usePhoneCallsData();
+  const {
+    phoneCallsState,
+    totalMinutesNeeded,
+    callMinutePackages,
+    selectedCallMinutesPackage,
+    onSectionValueChange,
+    doSetSelectedCallMinutesPackage,
+  } = usePhoneCallsData();
 
   return (
     <SectionContainer withFlags title="Voice call minutes (PR/US/CA)" icon={<RingerIcon />}>
@@ -154,22 +163,18 @@ export const CallMinutesSection = () => {
               as necessary.
             </MonthlyMinutesText>
             <StyledSelect
-              defaultValue="jack"
-              onChange={() => null}
-              options={[
-                {
-                  value: 'jack',
-                  label: (
-                    <Row align="middle" justify="space-between">
-                      <BlueText>100,000 mins</BlueText>
-                      <DropdownText variant="body2">$1,499.00</DropdownText>
-                    </Row>
-                  ),
-                },
-                { value: 'lucy', label: 'Lucy' },
-                { value: 'Yiminghe', label: 'yiminghe' },
-                { value: 'disabled', label: 'Disabled', disabled: true },
-              ]}
+              defaultValue="50000"
+              value={Boolean(selectedCallMinutesPackage) ? selectedCallMinutesPackage : undefined}
+              onChange={doSetSelectedCallMinutesPackage}
+              options={callMinutePackages.map(option => ({
+                value: option.quantity,
+                label: (
+                  <Row align="middle" justify="space-between">
+                    <BlueText>{Number(option.quantity).toLocaleString()} mins</BlueText>
+                    <DropdownText variant="body2"> {currencyFormatter.format(Number(option.amount))}</DropdownText>
+                  </Row>
+                ),
+              }))}
             />
           </Row>
         </BottomSection>
