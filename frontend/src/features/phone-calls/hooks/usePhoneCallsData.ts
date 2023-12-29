@@ -14,8 +14,8 @@ export const usePhoneCallsData = () => {
     dispatch(setFieldValue({ value, field }));
   }, []);
 
-  const doSetSelectedCallMinutesPackage = useCallback((value: string) => {
-    dispatch(setSelectedCallMinutesPackage(value));
+  const doSetSelectedCallMinutesPackage = useCallback((value: unknown) => {
+    dispatch(setSelectedCallMinutesPackage(String(value)));
   }, []);
 
   return {
