@@ -92,7 +92,7 @@ export const useEstimate = () => {
 
   // Extra Phone Numbers Charges
   const extraPhoneNumbers = totalPhoneNumbers - 1;
-  const additionalPhoneNumbersFee = extraPhoneNumbers * EXTRA_PHONE_NUMBER_COST[selectedPlan];
+  const additionalPhoneNumbersFee = extraPhoneNumbers * EXTRA_PHONE_NUMBER_COST;
   const extraPhoneNumberCharge = additionalPhoneNumbersFee > 0 && {
     text: `${extraPhoneNumbers} phone number${extraPhoneNumbers > 1 ? 's' : ''}`,
     total: additionalPhoneNumbersFee,
@@ -114,13 +114,19 @@ export const useEstimate = () => {
     total: additionalTextMessagesFee,
   };
 
-  const showAdditionalCharges = [
+  const additionalChargesArr = [
     additionalCompaniesFee,
     additionalContactsFee,
     additionalPhoneNumbersFee,
     additionalCallMinutesFee,
     additionalTextMessagesFee,
-  ].some(fee => fee > 0);
+  ];
+  const showAdditionalCharges = additionalChargesArr.some(fee => fee > 0);
+
+  const totalCharges =
+    Number(selectedPlanData.monthlyCost) +
+    (prepaidCharges?.reduce((acc, charge) => acc + Number(charge.total), 0) || 0) +
+    additionalChargesArr.reduce((acc, charge) => (charge > 0 ? charge + acc : acc), 0);
 
   return {
     PlanTypes,
@@ -133,6 +139,7 @@ export const useEstimate = () => {
     extraPhoneNumberCharge,
     extraCallMinutesCharge,
     extraTextMessagesCharge,
+    totalCharges,
     doSetSelectedPlan,
     doLoadEstimateFromURL,
     generateink,

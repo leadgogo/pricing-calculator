@@ -117,6 +117,7 @@ export const EstimateTotals: React.FC = () => {
     extraPhoneNumberCharge,
     extraCallMinutesCharge,
     extraTextMessagesCharge,
+    totalCharges,
   } = useEstimate();
 
   return (
@@ -191,11 +192,11 @@ export const EstimateTotals: React.FC = () => {
       <TotalsContainer>
         <StyledTotalsRow align="middle" justify="space-between">
           <EstimateText>ESTIMATED TOTAL MONTHLY PRICE</EstimateText>
-          <TotalText>$159.00</TotalText>
+          <TotalText>{currencyFormatter.format(totalCharges)}</TotalText>
         </StyledTotalsRow>
         <Row align="middle" justify="space-between">
           <Text>One-time setup fee</Text>
-          <Text>$249.00</Text>
+          <Text>{currencyFormatter.format(Number(selectedPlanData.setupFee))}</Text>
         </Row>
       </TotalsContainer>
       <TotalButtonContainer>
