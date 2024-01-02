@@ -34,7 +34,7 @@ const StyledHeading = styled(StyledText)`
 
 const phoneNumberOptions = [
   {
-    text: 'How many people in your company need a unique phone number??',
+    text: 'How many people in your company need a unique phone number?',
     name: 'agentPhoneNumbersAmount',
   },
   {
@@ -48,7 +48,7 @@ const phoneNumberOptions = [
 ];
 
 export const PhoneNumberSection = () => {
-  const { phoneNumbersState, totalPhoneNumbers, onSectionValueChange } = usePhoneNumbersData();
+  const { phoneNumbersState, totalPhoneNumbers, onSectionValueChange, EXTRA_PHONE_NUMBER_COST } = usePhoneNumbersData();
 
   return (
     <SectionContainer title="Phone numbers" icon={<PhoneNumberIcon />}>
@@ -68,7 +68,7 @@ export const PhoneNumberSection = () => {
         <StyledText>Phone numbers included in plan estimate:</StyledText>
         <NumberInput name="total" value={String(totalPhoneNumbers)} disabled />
       </TotalSection>
-      <Footer entity={'phone number'} />
+      <Footer price={EXTRA_PHONE_NUMBER_COST} entity={'phone number'} />
     </SectionContainer>
   );
 };

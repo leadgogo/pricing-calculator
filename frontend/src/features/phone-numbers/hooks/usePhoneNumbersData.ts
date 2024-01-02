@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setFieldValue } from 'src/features/phone-numbers/phone-numbers-slice';
+import { setFieldValue, EXTRA_PHONE_NUMBER_COST } from 'src/features/phone-numbers/phone-numbers-slice';
 import type { RootState } from 'src/store/types';
 
 export const usePhoneNumbersData = () => {
@@ -22,5 +22,6 @@ export const usePhoneNumbersData = () => {
     campaignPhoneNumbersAmount,
     totalPhoneNumbers,
     onSectionValueChange,
+    EXTRA_PHONE_NUMBER_COST,
   };
 };

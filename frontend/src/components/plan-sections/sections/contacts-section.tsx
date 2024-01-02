@@ -79,7 +79,7 @@ const ContactsContent = styled(Row)`
 `;
 
 export const ContactsSection = () => {
-  const { totalContacts, doSetTotalContacts } = useContacts();
+  const { totalContacts, doSetTotalContacts, extraContactsBlockFee } = useContacts();
 
   return (
     <SectionContainer title="Contacts" icon={<AvatarIcon />}>
@@ -101,7 +101,7 @@ export const ContactsSection = () => {
         step={1000}
       />
 
-      <Footer entity="contact" />
+      <Footer price={extraContactsBlockFee} entity="Block of 100 MACs" />
     </SectionContainer>
   );
 };

@@ -31,7 +31,7 @@ const companyOptions = [
 ];
 
 export const CompanySection = () => {
-  const { companiesState, onSectionValueChange } = useCompaniesData();
+  const { companiesState, onSectionValueChange, EXTRA_COMPANY_FEE } = useCompaniesData();
 
   return (
     <SectionContainer title="Companies" icon={<CompanyIcon />}>
@@ -46,7 +46,7 @@ export const CompanySection = () => {
           />
         </CompaniesSection>
       ))}
-      <Footer entity={'company'} />
+      <Footer price={EXTRA_COMPANY_FEE} entity={'company'} />
     </SectionContainer>
   );
 };

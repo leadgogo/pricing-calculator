@@ -2,6 +2,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { loadEstimateFromURL } from 'src/features/estimate/estimate-slice';
 import type { CompaniesState, RootState } from 'src/store/types';
 
+export const EXTRA_COMPANY_FEE = 50.0;
+
 const initialState: CompaniesState = {
   totalLocations: 1,
   workingDaysPerWeek: 5,

@@ -1,14 +1,21 @@
 import { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setFieldValue, setSelectedCallMinutesPackage } from 'src/features/phone-calls/call-minutes-slice';
+import {
+  setFieldValue,
+  setSelectedCallMinutesPackage,
+  EXESS_CALL_MINUTE_COST,
+} from 'src/features/phone-calls/call-minutes-slice';
 import type { RootState } from 'src/store/types';
 
 export const usePhoneCallsData = () => {
   const dispatch = useDispatch();
   const phoneCallsState = useSelector((state: RootState) => state.callMinutes);
+  const { totalLocations, workingDaysPerWeek, hoursOpenPerDay } = useSelector((state: RootState) => state.companies);
   const { callsPerHourAmount, callDurationInMinutes, callMinutePackages, selectedCallMinutesPackage } = phoneCallsState;
 
-  const totalMinutesNeeded = (callsPerHourAmount || 0) * callDurationInMinutes || 0;
+  // (localidades) * (días de operación) x (4semanas del mes) x (horas de operación) x (total de llamadas por hora) x (minutos promedio por llamada) x (2outbound-inbound)
+  const totalMinutesNeeded =
+    totalLocations * workingDaysPerWeek * 4 * hoursOpenPerDay * callsPerHourAmount * callDurationInMinutes * 2;
 
   const onSectionValueChange = useCallback(({ value, field }: { value: string; field: string }) => {
     dispatch(setFieldValue({ value, field }));
@@ -25,5 +32,6 @@ export const usePhoneCallsData = () => {
     selectedCallMinutesPackage,
     onSectionValueChange,
     doSetSelectedCallMinutesPackage,
+    EXESS_CALL_MINUTE_COST,
   };
 };

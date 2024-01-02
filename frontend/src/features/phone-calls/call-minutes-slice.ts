@@ -2,11 +2,18 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { PhoneCallState, RootState } from 'src/store/types';
 import { loadEstimateFromURL } from 'src/features/estimate/estimate-slice';
 
+export const EXESS_CALL_MINUTE_COST = 0.05;
+
 const initialState: PhoneCallState = {
   callsPerHourAmount: 1,
   callDurationInMinutes: 1,
-  selectedCallMinutesPackage: '',
+  selectedCallMinutesPackage: '0',
   callMinutePackages: [
+    {
+      quantity: '0',
+      pricePerUnit: '0',
+      amount: '0',
+    },
     {
       quantity: '2000',
       pricePerUnit: '0.045',

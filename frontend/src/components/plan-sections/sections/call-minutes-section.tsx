@@ -126,6 +126,7 @@ export const CallMinutesSection = () => {
     selectedCallMinutesPackage,
     onSectionValueChange,
     doSetSelectedCallMinutesPackage,
+    EXESS_CALL_MINUTE_COST,
   } = usePhoneCallsData();
 
   return (
@@ -151,7 +152,7 @@ export const CallMinutesSection = () => {
           <StyledNumberInput name="total" value={String(totalMinutesNeeded)} disabled />
         </Row>
       </TotalSection>
-      <Footer entity={'minute'}>
+      <Footer price={EXESS_CALL_MINUTE_COST} entity={'minute'}>
         <Text variant="footer"> Other fees may apply.</Text>
       </Footer>
       <BottomContainer>
@@ -163,17 +164,19 @@ export const CallMinutesSection = () => {
               as necessary.
             </MonthlyMinutesText>
             <StyledSelect
-              defaultValue="50000"
-              value={Boolean(selectedCallMinutesPackage) ? selectedCallMinutesPackage : undefined}
+              value={selectedCallMinutesPackage}
               onChange={doSetSelectedCallMinutesPackage}
               options={callMinutePackages.map(option => ({
                 value: option.quantity,
-                label: (
-                  <Row align="middle" justify="space-between">
-                    <BlueText>{Number(option.quantity).toLocaleString()} mins</BlueText>
-                    <DropdownText variant="body2"> {currencyFormatter.format(Number(option.amount))}</DropdownText>
-                  </Row>
-                ),
+                label:
+                  option.quantity === '0' ? (
+                    <BlueText>No package of minutes</BlueText>
+                  ) : (
+                    <Row align="middle" justify="space-between">
+                      <BlueText>{Number(option.quantity).toLocaleString()} mins</BlueText>
+                      <DropdownText variant="body2"> {currencyFormatter.format(Number(option.amount))}</DropdownText>
+                    </Row>
+                  ),
               }))}
             />
           </Row>

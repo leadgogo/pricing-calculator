@@ -72,7 +72,7 @@ const smsOptions = [
 export const TextMessagesSection = () => {
   const { sm: smallBreakpoint } = useBreakpoint();
 
-  const { textMessagesState, totalTextMessages, onSectionValueChange } = useTextMessagesData();
+  const { textMessagesState, totalTextMessages, onSectionValueChange, EXESS_SMS_COST } = useTextMessagesData();
 
   return (
     <SectionContainer withFlags title="Text messages (PR/US/CA)" icon={<SMSIcon />}>
@@ -97,7 +97,7 @@ export const TextMessagesSection = () => {
           <StyledNumberInput name="total" value={String(totalTextMessages)} disabled />
         </Row>
       </TotalSection>
-      <Footer entity={'SMS / text message'}>
+      <Footer price={EXESS_SMS_COST} entity={'SMS / text message'}>
         <Text variant="footer">
           {' '}
           Other fees apply. Business SMS are regulated and subject to{' '}
