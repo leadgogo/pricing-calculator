@@ -130,7 +130,7 @@ export const useEstimate = () => {
     additionalChargesArr.reduce((acc, charge) => (charge > 0 ? charge + acc : acc), 0) +
     (totalTextMessages ? SMS_CAMPAIGN_MONTHLY_FEE : 0);
 
-  const totalOneTimeCharges = selectedPlanData.setupFee + (totalTextMessages ? SMS_BRAND_REGISTRATION_COST : 0);
+  const totalOneTimeCharges = Number(selectedPlanData.setupFee) + (totalTextMessages ? SMS_BRAND_REGISTRATION_COST : 0);
 
   return {
     PlanTypes,
