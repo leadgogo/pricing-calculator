@@ -55,7 +55,7 @@ export const plans = {
 };
 
 const initialState: EstimateState = {
-  selectedPlan: PlanTypes.Essential,
+  selectedPlan: PlanTypes.Professional,
 };
 
 export const generateEstimateLink = createAsyncThunk('estimate/generateLink', async (_, thunkApi) => {
