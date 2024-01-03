@@ -63,7 +63,6 @@ const TotalsContainer = styled.div`
 
 const StyledTotalsRow = styled(Row)`
   width: 100%;
-  border-radius: 8px;
   border-bottom: ${({ theme }) => `2px solid ${theme.colors.koala}`};
   padding-bottom: 14px;
   margin-bottom: 14px;
@@ -117,7 +116,8 @@ export const EstimateTotals: React.FC = () => {
     extraPhoneNumberCharge,
     extraCallMinutesCharge,
     extraTextMessagesCharge,
-    totalCharges,
+    totalMonthlyCharges,
+    totalOneTimeCharges,
   } = useEstimate();
 
   return (
@@ -192,11 +192,11 @@ export const EstimateTotals: React.FC = () => {
       <TotalsContainer>
         <StyledTotalsRow align="middle" justify="space-between">
           <EstimateText>ESTIMATED TOTAL MONTHLY PRICE</EstimateText>
-          <TotalText>{currencyFormatter.format(totalCharges)}</TotalText>
+          <TotalText>{currencyFormatter.format(totalMonthlyCharges)}</TotalText>
         </StyledTotalsRow>
         <Row align="middle" justify="space-between">
           <Text>One-time setup fee</Text>
-          <Text>{currencyFormatter.format(Number(selectedPlanData.setupFee))}</Text>
+          <Text>{currencyFormatter.format(Number(totalOneTimeCharges))}</Text>
         </Row>
       </TotalsContainer>
       <TotalButtonContainer>

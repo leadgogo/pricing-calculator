@@ -27,7 +27,8 @@ export const useEstimate = () => {
   const { selectedCallMinutesPackage, callMinutePackages, totalMinutesNeeded, EXESS_CALL_MINUTE_COST } =
     usePhoneCallsData();
   const { totalPhoneNumbers, EXTRA_PHONE_NUMBER_COST } = usePhoneNumbersData();
-  const { totalTextMessages, EXESS_SMS_COST } = useTextMessagesData();
+  const { totalTextMessages, EXESS_SMS_COST, SMS_BRAND_REGISTRATION_COST, SMS_CAMPAIGN_MONTHLY_FEE } =
+    useTextMessagesData();
 
   const doSetSelectedPlan = useCallback((e: RadioChangeEvent) => {
     dispatch(setSelectedPlan(e.target.value));
@@ -83,7 +84,7 @@ export const useEstimate = () => {
   };
 
   // Extra Contacts Charges
-  const extraContacts = (Math.ceil(totalContacts / 100) * 100 - 1000) / 100;
+  const extraContacts = (Math.ceil((totalContacts - 1000) / 100) * 100) / 100;
   const additionalContactsFee = extraContacts * EXESS_PLAN_MONTHLY_ACTIVE_CONTACT_BLOCK_FEE[selectedPlan];
   const extraContactsCharge = additionalContactsFee > 0 && {
     text: `${extraContacts} contact block${extraContacts > 1 ? 's' : ''}`,
@@ -123,10 +124,13 @@ export const useEstimate = () => {
   ];
   const showAdditionalCharges = additionalChargesArr.some(fee => fee > 0);
 
-  const totalCharges =
+  const totalMonthlyCharges =
     Number(selectedPlanData.monthlyCost) +
     (prepaidCharges?.reduce((acc, charge) => acc + Number(charge.total), 0) || 0) +
-    additionalChargesArr.reduce((acc, charge) => (charge > 0 ? charge + acc : acc), 0);
+    additionalChargesArr.reduce((acc, charge) => (charge > 0 ? charge + acc : acc), 0) +
+    (totalTextMessages ? SMS_CAMPAIGN_MONTHLY_FEE : 0);
+
+  const totalOneTimeCharges = selectedPlanData.setupFee + (totalTextMessages ? SMS_BRAND_REGISTRATION_COST : 0);
 
   return {
     PlanTypes,
@@ -139,7 +143,8 @@ export const useEstimate = () => {
     extraPhoneNumberCharge,
     extraCallMinutesCharge,
     extraTextMessagesCharge,
-    totalCharges,
+    totalMonthlyCharges,
+    totalOneTimeCharges,
     doSetSelectedPlan,
     doLoadEstimateFromURL,
     generateink,

@@ -1,6 +1,11 @@
 import { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setFieldValue, EXESS_SMS_COST } from 'src/features/text-messages/text-messages-slice';
+import {
+  setFieldValue,
+  EXESS_SMS_COST,
+  SMS_BRAND_REGISTRATION_COST,
+  SMS_CAMPAIGN_MONTHLY_FEE,
+} from 'src/features/text-messages/text-messages-slice';
 import type { RootState } from 'src/store/types';
 
 export const useTextMessagesData = () => {
@@ -23,5 +28,7 @@ export const useTextMessagesData = () => {
     totalTextMessages,
     onSectionValueChange,
     EXESS_SMS_COST,
+    SMS_BRAND_REGISTRATION_COST,
+    SMS_CAMPAIGN_MONTHLY_FEE,
   };
 };

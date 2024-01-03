@@ -16,7 +16,7 @@ const essentialPlanIcludedItems = [
 
 const professionalPlanIcludedItems = [
   ...essentialPlanIcludedItems,
-  'PhoneSupport',
+  'Phone Support',
   'CRM',
   'Tasks',
   'Appointments',

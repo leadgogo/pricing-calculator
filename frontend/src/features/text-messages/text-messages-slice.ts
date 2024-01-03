@@ -4,7 +4,7 @@ import { loadEstimateFromURL } from 'src/features/estimate/estimate-slice';
 
 export const EXESS_SMS_COST = 0.05;
 export const SMS_BRAND_REGISTRATION_COST = 94.0;
-export const EXESS_CAMPAIGN_MONTHLY_FEE = 10.0;
+export const SMS_CAMPAIGN_MONTHLY_FEE = 10.0;
 
 const initialState: TextMessagesState = {
   receivedTextsPerHour: 1,
