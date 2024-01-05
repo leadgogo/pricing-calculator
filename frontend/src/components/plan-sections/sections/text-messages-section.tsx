@@ -23,6 +23,10 @@ const StyledText = styled(Text)`
   font-weight: 500;
 `;
 
+const BoldText = styled(Text)`
+  font-weight: 700;
+`;
+
 const TotalText = styled(StyledText)`
   max-width: 67%;
   ${({ theme }) => `
@@ -98,6 +102,7 @@ export const TextMessagesSection = () => {
         </Row>
       </TotalSection>
       <Footer price={EXESS_SMS_COST} entity={'SMS / text message'}>
+        <BoldText variant="footer"> Volume discounts for committed use available.</BoldText>
         <Text variant="footer">
           {' '}
           Other fees apply. Business SMS are regulated and subject to{' '}

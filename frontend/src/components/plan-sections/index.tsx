@@ -73,6 +73,12 @@ const StyledText = styled(Text)<{ selected: boolean }>`
   width: 100%;
   display: inline-block;
   color: ${({ theme, selected }) => (selected ? theme.colors.white : theme.colors.flint)};
+
+  ${({ theme }) => `
+  @media (max-width: ${theme.breakpoints.xs}) {
+    font-size: 11px
+  }  
+`}
 `;
 
 export const PlanSections: React.FC = () => {

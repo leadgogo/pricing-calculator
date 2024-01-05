@@ -3,35 +3,19 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import type { EstimateState, RootState } from 'src/store/types';
 import { PlanTypes } from 'src/store/types';
 
-const essentialPlanIcludedItems = [
+const sharedPlanIcludedItems = [
   '1,000 Monthly Active Contacts (MAC)',
   '1 phone number',
   '250 call minutes (PR/US/CA)',
   '100 SMS (PR/US/CA)',
   '1 company',
-  '10 users',
-  'Email Support',
-  'WhatsApp Business Integration (additional fees apply)',
 ];
 
-const professionalPlanIcludedItems = [
-  ...essentialPlanIcludedItems,
-  'Phone Support',
-  'CRM',
-  'Tasks',
-  'Appointments',
-  'Advanced Reporting',
-  'Internal Notes and Mentions',
-];
+const essentialPlanIcludedItems = [...sharedPlanIcludedItems, '10 users'];
 
-const premiumPlanIcludedItems = [
-  ...professionalPlanIcludedItems,
-  'Priority Support',
-  'Dedicated Account Executive',
-  'Customer Success Programs',
-  'Advanced Roles',
-  'Unlimited Users',
-];
+const professionalPlanIcludedItems = [...sharedPlanIcludedItems];
+
+const premiumPlanIcludedItems = [...sharedPlanIcludedItems, 'Unlimited Users'];
 
 export const plans = {
   [PlanTypes.Essential]: {
