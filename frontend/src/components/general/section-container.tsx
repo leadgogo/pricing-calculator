@@ -29,6 +29,9 @@ const SectionTitleContainer = styled.div`
 
 const FlagContainer = styled(Row)`
   gap: 4px;
+`;
+
+const EndContainer = styled.div`
   margin-left: auto;
 `;
 
@@ -37,9 +40,10 @@ type SectionContainerProps = {
   icon?: JSX.Element;
   withFlags?: boolean;
   children: React.ReactNode;
+  endElement?: React.ReactNode;
 };
 
-export const SectionContainer = ({ icon, title, withFlags, children }: SectionContainerProps) => {
+export const SectionContainer = ({ icon, title, withFlags, children, endElement }: SectionContainerProps) => {
   return (
     <Container>
       <SectionTitleContainer>
@@ -52,6 +56,7 @@ export const SectionContainer = ({ icon, title, withFlags, children }: SectionCo
             <CanadaIcon />
           </FlagContainer>
         )}
+        {endElement && <EndContainer>{endElement}</EndContainer>}
       </SectionTitleContainer>
 
       {children}

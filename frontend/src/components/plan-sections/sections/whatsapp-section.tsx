@@ -1,6 +1,6 @@
 import React from 'react';
-import { Row, Switch } from 'antd';
-import styled, { keyframes } from 'styled-components';
+import { Row } from 'antd';
+import styled from 'styled-components';
 
 import WhatsAppIcon from 'src/assets/whatsapp-icon';
 
@@ -8,16 +8,10 @@ import { useWhatsappData } from 'src/features/whatsapp/hooks/useWhatsappData';
 
 import { SectionWrapper } from 'src/components/general/section-container';
 import { Text } from 'src/components/general/text';
+import { SwitchInput } from 'src/components/general/switch';
 import { NumberInput } from 'src/components/general/input';
+import { fadeIn } from 'src/theme/theme';
 
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-`;
 const WhatsAppContainer = styled(({ isWhatsappActivated, ...rest }) => <SectionWrapper {...rest} />)`
   padding: 26px 20px 20px 20px;
   transition: all 0.5s ease-out;
@@ -35,19 +29,6 @@ const StyledText = styled(Text)`
 
 const StyledRow = styled(Row)`
   margin-top: 10px;
-`;
-
-const StyledSwitch = styled(Switch)`
-  border-color: ${({ theme }) => theme.colors.cosmo} !important;
-  outline: ${({ theme }) => `1px solid ${theme.colors.flint}`} !important;
-  &.ant-switch-checked {
-    background: ${({ theme }) => theme.colors.cosmo} !important;
-    border-color: ${({ theme }) => theme.colors.cosmo} !important;
-    outline: ${({ theme }) => `1px solid ${theme.colors.cosmo}`} !important;
-    & :hover {
-      background: ${({ theme }) => theme.colors.cosmo};
-    }
-  }
 `;
 
 const CollapsibleContainer = styled.div`
@@ -85,7 +66,7 @@ export const WhatsAppSections = () => {
         <StyledText variant="body2">
           Estimate the cost of using WhatsApp Business as a communication channel in the company.
         </StyledText>
-        <StyledSwitch value={isWhatsappActivated} onChange={doSetIsWhatsappActivated} />
+        <SwitchInput value={isWhatsappActivated} onChange={doSetIsWhatsappActivated} />
       </StyledRow>
       {isWhatsappActivated && (
         <CollapsibleContainer>

@@ -11,11 +11,22 @@ import SectionContainer from 'src/components/general/section-container';
 import { Text } from 'src/components/general/text';
 import { Footer } from 'src/components/general/footer';
 import { NumberInput } from 'src/components/general/input';
+import { SwitchInput } from 'src/components/general/switch';
+import { fadeIn } from 'src/theme/theme';
 
 const { useBreakpoint } = Grid;
 
 const ContentSection = styled(Row)`
   margin-top: 20px;
+`;
+
+const CollapsibleContainer = styled.div<{ isTextMessagesActivated: boolean }>`
+  transition: all 0.5s ease-out;
+  max-height: ${({ isTextMessagesActivated }) => (isTextMessagesActivated ? 500 : 0)}px;
+`;
+
+const WrapperContainer = styled.div`
+  animation: ${fadeIn} 0.6s ease-in-out;
 `;
 
 const StyledText = styled(Text)`
@@ -76,40 +87,58 @@ const smsOptions = [
 export const TextMessagesSection = () => {
   const { sm: smallBreakpoint } = useBreakpoint();
 
-  const { textMessagesState, totalTextMessages, onSectionValueChange, EXESS_SMS_COST } = useTextMessagesData();
+  const {
+    isTextMessagesActivated,
+    textMessagesState,
+    totalTextMessages,
+    onSectionValueChange,
+    doSetIsTextMessagesActivated,
+    EXESS_SMS_COST,
+  } = useTextMessagesData();
 
   return (
-    <SectionContainer withFlags title="Text messages (PR/US/CA)" icon={<SMSIcon />}>
-      <StyledHeading>Across the entire company, including all locations:</StyledHeading>
-      {smsOptions.map(section => (
-        <ContentSection key={section.name} wrap={false} align="middle" justify="space-between">
-          <Text variant="body2">{section.text}</Text>
-          <NumberInput
-            withControls
-            name={section.name}
-            value={textMessagesState[section.name]}
-            onChange={(value: string) => onSectionValueChange({ value, field: section.name })}
-          />
-        </ContentSection>
-      ))}
-      <TotalSection wrap={false} align="middle" justify="space-between">
-        <TotalText>Monthly SMS messages included in plan estimate:</TotalText>
-        <Row wrap={false} align="middle">
-          <Popover content={<PopoverContent />} placement={!smallBreakpoint ? 'top' : 'topLeft'}>
-            <InfoIcon />
-          </Popover>
-          <StyledNumberInput name="total" value={String(totalTextMessages)} disabled />
-        </Row>
-      </TotalSection>
-      <Footer price={EXESS_SMS_COST} entity={'SMS / text message'}>
-        <BoldText variant="footer"> Volume discounts for committed use available.</BoldText>
-        <Text variant="footer">
-          {' '}
-          Other fees apply. Business SMS are regulated and subject to{' '}
-          <BlueText variant="footer">additional fees</BlueText> and rules based on detailed registrations managed by The
-          Campaign Registry.
-        </Text>
-      </Footer>
+    <SectionContainer
+      withFlags
+      title="Text messages (PR/US/CA)"
+      icon={<SMSIcon />}
+      endElement={<SwitchInput value={isTextMessagesActivated} onChange={doSetIsTextMessagesActivated} />}
+    >
+      <CollapsibleContainer isTextMessagesActivated={isTextMessagesActivated}>
+        {isTextMessagesActivated && (
+          <WrapperContainer>
+            <StyledHeading>Across the entire company, including all locations:</StyledHeading>
+            {smsOptions.map(section => (
+              <ContentSection key={section.name} wrap={false} align="middle" justify="space-between">
+                <Text variant="body2">{section.text}</Text>
+                <NumberInput
+                  withControls
+                  name={section.name}
+                  value={textMessagesState[section.name]}
+                  onChange={(value: string) => onSectionValueChange({ value, field: section.name })}
+                />
+              </ContentSection>
+            ))}
+            <TotalSection wrap={false} align="middle" justify="space-between">
+              <TotalText>Monthly SMS messages included in plan estimate:</TotalText>
+              <Row wrap={false} align="middle">
+                <Popover content={<PopoverContent />} placement={!smallBreakpoint ? 'top' : 'topLeft'}>
+                  <InfoIcon />
+                </Popover>
+                <StyledNumberInput name="total" value={String(totalTextMessages)} disabled />
+              </Row>
+            </TotalSection>
+            <Footer price={EXESS_SMS_COST} entity={'SMS / text message'}>
+              <BoldText variant="footer"> Volume discounts for committed use available.</BoldText>
+              <Text variant="footer">
+                {' '}
+                Other fees apply. Business SMS are regulated and subject to{' '}
+                <BlueText variant="footer">additional fees</BlueText> and rules based on detailed registrations managed
+                by The Campaign Registry.
+              </Text>
+            </Footer>
+          </WrapperContainer>
+        )}
+      </CollapsibleContainer>
     </SectionContainer>
   );
 };

@@ -1,4 +1,5 @@
 import { DefaultTheme } from 'styled-components';
+import { keyframes } from 'styled-components';
 import { colorPalette } from 'src/theme/color-palette';
 import { fonts } from 'src/theme/fonts';
 import { buttonsTheme } from 'src/theme/sub-themes/buttons-theme';
@@ -105,3 +106,12 @@ export const lggTheme: DefaultTheme = {
     },
   },
 };
+
+export const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;

@@ -36,6 +36,7 @@ export interface PhoneNumbersState {
 }
 
 export interface TextMessagesState {
+  isTextMessagesActivated: boolean;
   receivedTextsPerHour: number;
   sentTextsPerHour: number;
 }
